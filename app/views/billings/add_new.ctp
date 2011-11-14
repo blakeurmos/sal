@@ -81,11 +81,14 @@ function auto_populate() {
 			dataType: 'json',
 			success: function(res) {
 				if(res.success=='1') {
+					$('#BillingClientName').val(res.client_name);
+					$('#BillingBillTo').val(res.bill_to);
 					$('#BillingCaseNo').val(res.case_no);
 					$('#BillingType').val(res.type);
 					$('#BillingDiag').val(res.diag);
 					$('#BillingGrCSo').val(res.gr_c_so);
 					$('#BillingSchOffHv').val(res.sch_off_hv);
+					$('#BillingCpt').val(res.cpt);
 				}else {
 					$('#ajax_msg').html(res.message).show();
 				}

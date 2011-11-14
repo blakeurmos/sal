@@ -8,8 +8,8 @@ class User extends AppModel {
 				'message' => 'username cannot be left blank.',
 			),					
 			'rule2' => array(
-				'rule' => array('alphaNumeric'),
-				'message' => 'Usernames must alpha numeric.',
+				'rule' => array('custom','/^[a-z]+$/i'),
+				'message' => 'Usernames must contain only letters.',
 			),					
 			'rule3' => array(
 				'rule' => array('isUnique'),
