@@ -1,0 +1,190 @@
+html {
+    overflow-y: scroll;
+}
+ body {
+    background-color: white;
+    min-height: 600px;
+    width: 88%;
+    padding: 10px 80px;
+    position: absolute;
+	text-align: center;
+}
+body, p, table, td, th, ul, ol, textarea, input {
+    font-family: verdana,helvetica,arial,sans-serif;
+	font-size:11;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: verdana,helvetica,arial,sans-serif;
+
+}
+
+.error-message {
+    color: red;
+}
+
+
+.main_div {
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    width: 1000px;
+	margin-left:auto;
+	margin-right:auto; 
+}
+
+.header_div {
+    background-color: #00A5C9;
+    height: 80px;
+    padding: 20px;
+	margin-bottom:10px;
+}
+.leftmenu_div {
+    background-color: #D9FBFF;
+    float: left;
+    padding: 10px;
+    position: relative;
+    min-height: 500px;
+    width: 150px;
+}
+.content_div {
+    background-color: #D9FBFF;
+    float: left;
+    padding: 10px;
+    position: relative;
+	min-height: 500px;
+    width: 800px;
+	margin-left:10px;
+
+}
+.clear_div {
+    clear: both;
+}
+.footer_div {
+    background-color: #00A5C9;
+    position: relative;
+	margin-top:10px;
+	padding:10px;
+}
+
+.login_detail {
+	float:right;
+	padding-top:20px;
+}
+
+th {
+    background-color: #086F9C;
+}
+
+#id_entire_billing_list {
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:50px;
+
+	padding-left:20px;
+	padding-right:20px;
+}
+
+.listing_add_new {
+	float:left;
+	margin-bottom:10px;
+	text-align:left;
+	
+}
+
+#id_entire_search_form {
+	float:left;
+	padding-left:20px;
+}
+
+.search_header{
+	text-align:left;
+}
+
+
+.form_header{
+	text-align:left;
+}	
+
+
+table {
+	border: 1px solid #7FDFF5;
+	text-align: left; }
+th {
+	font-weight: bold;
+	background-color: #4FCCE8;
+	border-bottom: 1px solid #7FDFF5; 
+}
+td,th {
+	padding: 4px 5px; 
+}
+
+.even {
+	background-color: #F0F8FA; }
+.odd {
+	border-bottom: 1px solid #ADEAF7; }
+	
+.hover_tr{
+	background-color: #7AD6EB;
+}
+
+ul.side_menu{
+	padding:0;
+	margin:0;
+	list-style:none;
+	border-bottom: 1px solid #7FDFF5;
+	width:100px;
+	background-color:white;
+
+}
+
+ul.side_menu li{
+	border-top: 1px solid #7FDFF5;
+	border-left: 1px solid #7FDFF5;
+	border-right: 1px solid #7FDFF5;
+	padding-bottom:5px;
+}
+
+ul.side_menu li a{
+	text-decoration:none;
+	display:block;
+	width:100px;
+	color:black;
+}
+
+ul.side_menu li:hover{
+	background-color: #7AD6EB;
+}
+.menu_items {
+	margin-left:90px;
+}
+
+label.error {
+	font-size:10px;
+	color:#FF0000;
+}
+
+/*Task-2 css added*/
+#id_div_rate_form {
+	float:right;
+
+}
+
+#id_div_calculation{
+	float:right;
+}
+
+#id_div_entire_rate {
+	float:right;
+	padding-right:20px;
+	margin-top:35px;
+}
+#id_span_success_rate_msg{
+	float:right;
+}
+#id_span_error_rate_msg{
+	float:right;
+}
+.listing_printer{
+	float:right;
+}
