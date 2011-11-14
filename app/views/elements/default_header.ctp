@@ -1,4 +1,4 @@
-<span class="header_text"><h2>SALARY TRACKING SYSTEM</h2></span>
+<span class="header_text"><h2>SAL TRACKING SYSTEM</h2></span>
 <span class="login_detail">
 	Welcome, 
 	<?php 
