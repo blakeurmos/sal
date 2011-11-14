@@ -1,6 +1,6 @@
 <?php
 // ABHISHEK 
-// This one is my addition
+// testing git
 /**
  * This is core configuration file.
  *
