@@ -62,7 +62,11 @@
 								?>
 						</td>
 						<td><?php echo count($value['Billing']); ?></td>
-						<td><?php echo $value['User']['last_login']; ?></td>
+						<td>
+						<?php 
+							echo ($value['User']['last_login']==NULL)?'Never logged in':$value['User']['last_login']; 
+						?>
+						</td>
 						<td colspan=2">
 							<?php 
 								echo $this->Html->link(
