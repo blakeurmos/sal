@@ -64,7 +64,9 @@ class BillingsController extends AppController {
 		
 		$userinfo 	 = $this->Session->read('Auth.User');	
 		$conditions  = array();
-		$conditions += array('Billing.user_id'=>$userinfo['id']);
+		if($userinfo['type']!='1') {
+			$conditions += array('Billing.user_id'=>$userinfo['id']);
+		}
 		$conditions += array('Billing.is_deleted'=>0);
 
 		if($billDate){

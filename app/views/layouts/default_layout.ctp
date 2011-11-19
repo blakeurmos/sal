@@ -86,7 +86,7 @@ echo $html->css(array('default'));
 				  <div id="ajax_msg"><?php echo  $session->flash(); ?> </div>
 			</div>
 			<?php  echo $content_for_layout; ?>
-			<?php //echo $this->element('sql_dump'); ?>
+			<?php     echo $this->element('sql_dump'); ?>
 		</div>
 		<div class="clear_div"> </div>
 		<div class="footer_div"> 
