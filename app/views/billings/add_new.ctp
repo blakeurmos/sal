@@ -116,7 +116,7 @@ function auto_populate() {
 		<td align="right">Bill To:</td>
 		<td align="left">
 		<?php 
-			$options = array('M'=>'M','I'=>'I','SF'=>'SF','NB'=>'NB');
+			$options = array('M'=>'M','I'=>'I','SF'=>'SF', 'DA'=>'DA', 'NB'=>'NB');
 			echo $this->Form->input('bill_to',array('div'=>false, 'label'=>false, 'options'=>$options, 'empty'=>'Select')); 
 		?>
 		<br />

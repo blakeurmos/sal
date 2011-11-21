@@ -64,6 +64,8 @@ class BillingsController extends AppController {
 		
 		$userinfo 	 = $this->Session->read('Auth.User');	
 		$conditions  = array();
+		
+		// if log'd in user is not admin user
 		if($userinfo['type']!='1') {
 			$conditions += array('Billing.user_id'=>$userinfo['id']);
 		}

@@ -6,11 +6,20 @@
 			<tr>
 				<td>Rate</td>
 				<td>
-					<?php echo '$'.$this->Form->input('rate', array('onfocus'=>'remove_disabled();', 'label'=>false, 'div'=> false, 'size'=>6)); ?><br>
+					<?php echo '$'.$this->Form->input('rate', array('onfocus'=>'remove_disabled_button(\'id_rate_form\');', 'label'=>false, 'div'=> false, 'size'=>6)); ?><br>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2"><label for="UserRate" generated="true" class="error"></label></td>
+			</tr>			
+			<tr>
+				<td>School</td>
+				<td>
+					<?php echo $this->Form->input('school', array('onfocus'=>'remove_disabled_button(\'id_rate_form\');', 'label'=>false, 'div'=> false, 'size'=>10)); ?><br>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><label for="UserSchool" generated="true" class="error"></label></td>
 			</tr>
 			<tr>
 				<td colspan="2">
@@ -29,7 +38,7 @@
 				<td id="id_td_my_rate"><?php echo '$'.$this->data['User']['rate'];?></td>
 			</tr>	
 			<tr>
-				<td>Due Amt :</td>
+				<td>Total:</td>
 				<td id="id_td_my_due"></td>
 			</tr>
 		</table>

@@ -1,7 +1,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		set_rate();
-		set_due();
+		set_total();
 	}); 
 
 	function set_rate() {
@@ -9,7 +9,7 @@
 		$('#id_td_my_rate').html(set_currency(inputRate));
 	}
 	
-	function set_due() {
+	function set_total() {
 		var time  = 0;
 		if($('#id_span_total_duration').length > 0)	
 			time = parseInt($('#id_span_total_duration').html());
@@ -24,12 +24,18 @@
 			  'data[User][rate]':{
 					required: true,
 					number: true
+				},
+			  'data[User][school]':{
+					required: true
 				}
 			},
 		messages: {
 			'data[User][rate]':{
 					required: "This field cannot be left blank",
 					number: "Please enter a numeric value"
+				},
+			'data[User][school]':{
+					required: "This field cannot be left blank"
 				}
 			}
 		});
@@ -63,7 +69,7 @@
 		var url="<?php echo $this->Html->url(array('controller'=>'users','action'=>'update_user_rate')); ?>";
 		if(!form_validate()) return false;
 		
-		add_disabled();
+		add_disabled_button('id_rate_form');
 		$.ajax({
 			type: 'POST',
 			url: url,
@@ -71,12 +77,12 @@
 			dataType: 'json',
 			success: function(res) {
 				if(res.success=='0'){
-					remove_disabled();
+					remove_disabled_button('id_rate_form');
 					$('#id_div_success_rate_msg').html('');
 					$('#id_div_error_rate_msg').html(res.message).show();
 				}else {
 					set_rate();
-					set_due();
+					set_total();
 					$('#id_div_error_rate_msg').html('');
 					$('#id_div_success_rate_msg').html(res.message).show();
 				}
@@ -85,25 +91,12 @@
 	}
 	
 	function show_print_preview() { 
-		window.open(document.URL+'/print_preview:1', "Print Preview", "location=1,status=1,scrollbars=1,  width=650,height=500");
+		window.open(document.URL+'/print_preview:1', "Print Preview", "location=1,status=1,scrollbars=1,  width=850,height=500");
 	
-	}
-	
-	function remove_disabled() {
-		$('#id_rate_form').find('button').removeAttr('disabled');
-	}
-	
-	function add_disabled() {
-		$('#id_rate_form').find('button').attr("disabled","disabled");
 	}
 	
 	
 </script>
-<?php
-$username = isset($username)?$username:'';
-$email = isset($email)?$email:'';
-//$type = isset($type)?$type:'';
-?>
 <div id="id_entire_search_form">
 	<div class="search_header">
 		<h3>Search</h3>
@@ -166,7 +159,10 @@ $email = isset($email)?$email:'';
 			<?php if(isset($records[0])){ ?>
 			<table id="listing_table"  width="100%" cellpadding="0" cellspacing="0">
 					<tr>
-						<th>Billed To</th>
+					<?php if($this->Session->read('Auth.User.type')=='1') { ?>
+						<th>Added <br/>By</th>
+					<?php } ?>
+						<th>Billed <br/>To</th>
 						<th>Date</th>
 						<th>Client Name</th>
 						<th>Case #</th>
@@ -183,6 +179,9 @@ $email = isset($email)?$email:'';
 					$totalDuration = 0;
 					foreach($records as $key => $value) { ?>
 					<tr class="first" id="record_<?php echo $value['Billing']['id']; ?>">
+					<?php if($this->Session->read('Auth.User.type')=='1') { ?>
+						<td><?php echo $value['User']['username']; ?></td>
+					<?php } ?>
 						<td><?php echo $value['Billing']['bill_to']; ?></td>
 						<td><?php echo $value['Billing']['bill_date']; ?></td>
 						<td><?php echo $value['Billing']['client_name']; ?></td>

@@ -5,8 +5,15 @@
 <title>Salary Tracking System</title>
 
 <?php
-echo $html->script(array('jquery', 'jquery.validate'));
-echo $html->css(array('default'));	 
+echo $html->script(array(
+					'jquery',
+					'jquery.validate',
+					'fancybox/jquery.fancybox-1.3.4.pack',
+					'fancybox/jquery.mousewheel-3.0.4.pack'));
+echo $html->css(array(
+					'default',
+					'fancybox/jquery.fancybox-1.3.4'
+					));	 
 ?>
 <script type="text/javascript">
 
@@ -31,6 +38,8 @@ echo $html->css(array('default'));
 				$(this).removeClass("hover_tr");
 			  }
 		);
+		
+		
 	});
 	function url_redirect(url){		
 		window.location.href = url;
@@ -70,6 +79,18 @@ echo $html->css(array('default'));
 		}
 		
 		return result;
+	}
+	
+	// removes disabled button inside a form 
+	// params:- form Id of the form inside which the button is located
+	function remove_disabled_button(idForm) {
+		$('#'+idForm).find('button').removeAttr('disabled');
+	}
+	
+	// disables a button 
+	// params:- form Id of the form inside which the button is located
+	function add_disabled_button(idForm) {
+		$('#'+idForm).find('button').attr("disabled","disabled");
 	}
 </script>
 <body>

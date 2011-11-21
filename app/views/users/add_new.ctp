@@ -99,7 +99,7 @@ function form_validate(){
 		<td align="right">Type:</td>
 		<td align="left">
 		<?php 
-			$options = array('1'=>'Admin','2'=>'Therapist','3'=>'CPST');
+			$options = array('1'=>'Admin','2'=>'Therapist','3'=>'CPST','4'=>'Supervisor');
 			echo $this->Form->input('type',array('div'=>false, 'label'=>false, 'options'=>$options, 'empty'=>'Select')); 
 		?>
 			<br />

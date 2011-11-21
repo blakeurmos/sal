@@ -1,0 +1,77 @@
+html {
+    overflow-y: scroll;
+}
+ body {
+    background-color: white;
+    min-height: 500px;
+    width: 88%;
+    padding: 10px 25px;
+    position: absolute;
+	text-align: center;
+}
+body, p, table, td, th, ul, ol, textarea, input {
+    font-family: verdana,helvetica,arial,sans-serif;
+	font-size:11;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: verdana,helvetica,arial,sans-serif;
+
+}
+
+/* Task-3 css added */
+.print_button  {
+	float:left;
+}
+
+#id_div_service_log {
+    text-align: center;
+	margin-left:auto;
+	margin-right:auto; 
+}
+
+#id_table_service_log {
+    width: 100%;
+	border-collapse:collapse;
+}
+
+#id_table_service_log  td{
+	border: 1px solid black;
+}
+ 
+#id_div_printable{
+	margin-top:20px;
+}
+
+#id_table_print{
+    width: 100%;
+	padding-top:20px;
+	border-collapse:collapse;
+}
+
+#id_table_print th{
+	text-align:left;
+	border-bottom:1px solid black;
+}
+
+#id_table_print td.last {
+	border-top:1px solid black;
+	border-bottom:1px solid black;
+	font-weight:bold;
+}
+
+.even {
+	background-color:#E0E0D1;
+}
+
+.odd {
+	background-color:#E9E9DF;
+}
+
+.leftpad40px{
+	padding-left:40px;
+}
+
+.rightpad40px{
+	padding-right:40px;
+}

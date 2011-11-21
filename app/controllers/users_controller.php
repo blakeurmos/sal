@@ -6,10 +6,10 @@ class UsersController extends AppController {
 	
 	
 /**
- * Function executes before anyother function
+ * Function executes before another function
  * in the controller.
  */
-	function beforefilter() { 	
+	function beforefilter() {
 		$this->disableCache();
 		$this->Auth->fields = array('username'=>'username','password'=>'password');
 		$this->Auth->loginRedirect = array('controller' => 'billings', 'action' => 'index');
@@ -57,7 +57,7 @@ class UsersController extends AppController {
 		$this->layout='default_layout';
 		$userInfo 	 = $this->Session->read('Auth.User');	
 		
-		if($userInfo['type'] != 1) {
+		if($userInfo['type'] != '1') {
 			$this->Session->setFlash('You are not authorized to access this feature');
 			$this->redirect('/billings/index');
 		}
@@ -132,7 +132,7 @@ class UsersController extends AppController {
  */
 	function my_rate() {
 		$this->User->id = $this->Session->read('Auth.User.id');
-		$this->data = $this->User->read('rate');
+		$this->data = $this->User->read('rate, school');
 		$this->render('my_rate');
 	}
 	
@@ -145,14 +145,45 @@ class UsersController extends AppController {
 		$this->layout= 'ajax';
 		$statusArr = array('success'=>0, 'message'=>'');
 		$this->User->id = $this->Session->read('Auth.User.id');
-		if($this->User->saveField('rate', $this->data['User']['rate'], true)) {
+		if($this->User->save($this->data, true)) {
+			$this->Session->write('Auth.User.rate', $this->data['User']['rate']);
+			$this->Session->write('Auth.User.school', $this->data['User']['school']);
 			$statusArr['success']=1;
 			$statusArr['message']='Updated successfully';		
-
 		}else{
 			$statusArr['message']='Error Occured, operation unsuccessful.';		
 		}
 		echo json_encode($statusArr);
 		exit;
+	}
+	
+/**
+ * Functions get the list of all users except admin
+ *
+ */
+	function get_user_list() {
+		$this->layout= 'ajax';
+
+		$statusArr = array('success'=>0, 'message'=>'', 'content'=>'');
+		$userInfo = $this->Session->read('Auth.User');
+		if($userInfo['type']=='1') {
+			$options = array(
+							'fields'=>'User.id, User.full_name',
+							'conditions'=>array('User.type !='=>'1', 'User.is_deleted'=>'0'),
+							'order' => 'User.full_name ASC'
+
+						);
+			$this->User->recursive = -1 ;
+
+			$this->User->virtualFields = array('full_name' => 'CONCAT(User.first_name, " " , User.last_name)');
+
+			$systemUserList = $this->User->find('list',$options);
+			$this->set('systemUserList',$systemUserList);
+			$this->set('supervisorInfo', $this->User->read('full_name, id', $this->params['form']['id']));
+		}
+		
+		//echo json_encode($statusArr);
+
+		
 	}
 }

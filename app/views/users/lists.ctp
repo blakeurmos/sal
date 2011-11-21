@@ -26,6 +26,23 @@
 			});
 		}
 	}
+	
+	function assign_users(id, tis) {
+	
+		var url="<?php echo $this->Html->url(array('controller'=>'users','action'=>'get_user_list')); ?>";
+		$.ajax({
+			type: 'POST',
+			url: url,
+			data: {id:id},
+			success: function(res) {
+				$.fancybox(res,{
+					'orig' : $(tis),
+					'transitionIn':'elastic',
+					'transitionOut':'elastic'
+				});
+			}
+		});
+	}
 </script>
 
 <div id="id_entire_billing_list">
@@ -57,9 +74,9 @@
 							<?php 
 								if($value['User']['type']==1) echo 'Admin'; 
 								if($value['User']['type']==2) echo 'Therapist'; 
-								if($value['User']['type']==3) echo 'Other'; 
-								
-								?>
+								if($value['User']['type']==3) echo 'CPST'; 
+								if($value['User']['type']==4) echo 'Supervisor'; 
+							?>
 						</td>
 						<td><?php echo count($value['Billing']); ?></td>
 						<td>
@@ -69,6 +86,19 @@
 						</td>
 						<td colspan=2">
 							<?php 
+								if($value['User']['type']=='4') {
+									echo $this->Html->link(
+													$this->Html->image('led-ico/application_key.png',array('border'=>'none')),
+													'javascript:void(0);',
+													array(
+														'onclick'=>"assign_users(".$value['User']['id'].", this)", 'escape'=>false, 'title'=>'Assign users',
+														'class'=>'ico'
+														)
+											); 
+									echo ' | ';
+								}else {
+									echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+								}
 								echo $this->Html->link(
 													$this->Html->image('led-ico/pencil.png',array('border'=>'none')),
 													array('controller'=>'users','action'=>'add_new','/id:'.$value['User']['id']),
