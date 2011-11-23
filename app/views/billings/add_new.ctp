@@ -1,6 +1,6 @@
 <script type='text/javascript'>
 function form_validate(){
-	validator=$("#billing_form_id").validate({	
+	var validator=$("#billing_form_id").validate({	
 	rules: {
 			'data[Billing][bill_to]':{
 				required: true
@@ -66,8 +66,8 @@ function form_validate(){
 		  	}
 		}
 	});
-	x=validator.form();
-	return x;
+
+	return validator.form();
 }
 
 function auto_populate() {

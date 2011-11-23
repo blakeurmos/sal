@@ -19,7 +19,7 @@
 	}
 	
 	function form_validate(){
-		validator=$("#id_rate_form").validate({	
+		var validator=$("#id_rate_form").validate({	
 		rules: {
 			  'data[User][rate]':{
 					required: true,
@@ -39,8 +39,7 @@
 				}
 			}
 		});
-		x=validator.form();
-		return x;
+		return validator.form();
 	}
 
 	function delete_billing(id) {
@@ -91,7 +90,7 @@
 	}
 	
 	function show_print_preview() { 
-		window.open(document.URL+'/print_preview:1', "Print Preview", "location=1,status=1,scrollbars=1,  width=850,height=500");
+		window.open(document.URL+'/print_preview:1', "PrintPreview", "location=1,status=1,scrollbars=1,width=850,height=500");
 	
 	}
 	

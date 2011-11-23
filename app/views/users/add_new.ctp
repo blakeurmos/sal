@@ -1,6 +1,6 @@
 <script type='text/javascript'>
 function form_validate(){
-	validator=$("#user_form_id").validate({	
+	var validator=$("#user_form_id").validate({	
 	rules: {
 		  'data[User][first_name]':{
 			required: true
@@ -36,8 +36,8 @@ function form_validate(){
 		  	}
 		}
 	});
-	x=validator.form();
-	return x;
+
+	return 	validator.form();
 }
 </script>
 

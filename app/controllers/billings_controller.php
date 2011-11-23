@@ -6,13 +6,25 @@ class BillingsController extends AppController {
 	
 	
 /**
- * Function executes before anyother function
- * in the controller.
+ * Function executes before executed before 
+ * every action in the controller.
  */
-	function beforefilter() { 
+	function beforeFilter() {
+	
 		$userinfo=$this->Session->read('Auth');
 		$this->disableCache();
 		$this->layout='default_layout';
+		parent::beforeFilter();
+	}
+	
+	
+/**
+ * Function executes after controller action logic, 
+ * but before the view is rendered. 
+ */	
+	function beforeRender() {
+	
+		parent::beforeRender();
 	}
 	
 	
@@ -20,7 +32,7 @@ class BillingsController extends AppController {
  * Function is made just for the landing page 
  * after user logins successfully.
  */
-	function index() { 
+	function index() {
 		
 	}
 	
@@ -29,7 +41,7 @@ class BillingsController extends AppController {
  * Functiion handle reading the posted variables, 
  * and redirecting back to the list url.
  */
-	function searchRedirect() {        
+	function searchRedirect() {
 		$str = '';
 		foreach($this->data['Billing'] as $key=>$value){
 			if($key == 'bill_date') {
@@ -94,6 +106,7 @@ class BillingsController extends AppController {
 			$this->layout = 'ajax';
 			$this->render('lists_print_preview');
 		}
+
 	}
 	
 	
@@ -141,6 +154,7 @@ class BillingsController extends AppController {
 		exit;
 	}
 	
+	
 /**
  *
  */
@@ -159,6 +173,8 @@ class BillingsController extends AppController {
 		echo json_encode($billRecord);
 		exit;
 	}
+	
+	
 /**
  * Function pulls  the client list of the logged in
  * user and sends to view in key=>val array

@@ -7,7 +7,18 @@
 
 <?php
 echo $html->script(array());
-echo $html->css(array('default','login'));	 
+
+
+// cross browser compatibility codes
+$default = 'default'; 
+$login = 'login';
+if($browserInfo['name']=='Internet Explorer') {
+	$default = 'ie_default';
+	$login = 'ie_login';
+}
+
+
+echo $html->css(array($default,$login));	 
 ?>
 </head>
 

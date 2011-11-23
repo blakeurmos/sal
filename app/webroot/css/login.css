@@ -1,7 +1,12 @@
 .leftmenu_div {
     width: 220px;
+	float:left;
+	height:auto;
 
 }
 .content_div {
     width: 730px;
+	float:left;
+	height:auto;
+
 }

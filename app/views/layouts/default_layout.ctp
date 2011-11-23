@@ -5,13 +5,22 @@
 <title>Salary Tracking System</title>
 
 <?php
-echo $html->script(array(
+echo $this->Html->script(array(
 					'jquery',
 					'jquery.validate',
 					'fancybox/jquery.fancybox-1.3.4.pack',
 					'fancybox/jquery.mousewheel-3.0.4.pack'));
-echo $html->css(array(
-					'default',
+?>
+<?php
+
+// cross browser compatibility codes
+$default = 'default'; 
+if($browserInfo['name']=='Internet Explorer') {
+	$default = 'ie_default';
+}
+
+echo $this->Html->css(array(
+					$default,
 					'fancybox/jquery.fancybox-1.3.4'
 					));	 
 ?>

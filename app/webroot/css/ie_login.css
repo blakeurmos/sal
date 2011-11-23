@@ -1,0 +1,12 @@
+.leftmenu_div {
+    width: 220px;
+	float:left;
+	height:auto;
+	height: expression( this.scrollHeight < 501 ? "500px" : "auto" ); /* sets min-height for IE */
+}
+.content_div {
+    width: 702px;
+	float:left;
+	height:auto;
+	height: expression( this.scrollHeight < 501 ? "500px" : "auto" ); /* sets min-height for IE */
+}

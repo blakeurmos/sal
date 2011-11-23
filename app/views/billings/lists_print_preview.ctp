@@ -1,4 +1,4 @@
-<?php echo $html->css(array('print_preview'));	  ?>
+<?php echo $this->Html->css(array('print_preview'),'stylesheet',array('media'=>'all'));	  ?>
 
 <script type="text/javascript">
 	function printDiv(divId)
