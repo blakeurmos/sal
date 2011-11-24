@@ -13,11 +13,16 @@
 </script>
 <?php 
 	$totalTime = 0;
+	$totalNB = 0;
 	$rate = $this->Session->read('Auth.User.rate');
 	foreach($records as $key => $value) {
-		$totalTime += $value['Billing']['duration'];
+		if($value['Billing']['bill_to']=='NB') {
+			$totalNB++;
+		}else {
+			$totalTime += $value['Billing']['duration'];
+		}
 	}
-	$totalSum = $totalTime*$rate/60;
+	$totalSum = ($totalTime*$rate/60)+($totalNB*20);
 ?>
 <span class="print_button">
 	<?php echo $this->Html->link(

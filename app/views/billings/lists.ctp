@@ -14,8 +14,9 @@
 		if($('#id_span_total_duration').length > 0)	
 			time = parseInt($('#id_span_total_duration').html());
 		var rate = get_currency($('#id_td_my_rate').html());
-		var due = (rate*time/60);
-		$('#id_td_my_due').html(set_currency(due));
+		var total = (rate*time/60);
+		var totalNB = get_currency($('#id_total_NB').html());
+		$('#id_td_my_due').html(set_currency(total + (totalNB*20)));
 	}
 	
 	function form_validate(){
@@ -176,6 +177,7 @@
 					</tr>
 					<?php 
 					$totalDuration = 0;
+					$totalNB = 0;
 					foreach($records as $key => $value) { ?>
 					<tr class="first" id="record_<?php echo $value['Billing']['id']; ?>">
 					<?php if($this->Session->read('Auth.User.type')=='1' || $this->Session->read('Auth.User.type')=='4' ) { ?>
@@ -188,8 +190,12 @@
 						<td><?php echo $value['Billing']['appointment_time']; ?></td>
 						<td>
 							<?php 
+							if($value['Billing']['bill_to']=='NB') {
+								$totalNB++;
+							}else {
+								$totalDuration += $value['Billing']['duration'];
+							}
 							echo $value['Billing']['duration']; 
-							$totalDuration += $value['Billing']['duration'];
 							?>
 						</td>
 						<td><?php echo $value['Billing']['type']; ?></td>
@@ -224,6 +230,7 @@
 						<td colspan="8" align="left" id="id_td_total_duration">
 							<span  id="id_span_total_duration"><?php echo $totalDuration; ?></span>
 							<span> minutes</span>
+							<span id="id_total_NB" style="display:none"><?php echo $totalNB; ?></span>
 						</td>
 					</tr>					
 			</table>
