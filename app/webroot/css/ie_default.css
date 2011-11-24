@@ -191,7 +191,7 @@ label.error {
 
 #id_div_assign_full{
 	height:300px;
-	width:250px;
+	width:275px;
 }
 
 #id_div_assign_header{
@@ -217,5 +217,6 @@ label.error {
 
 #id_div_assign_button{
 	float:right;
+	margin-right:40px;
 }
 

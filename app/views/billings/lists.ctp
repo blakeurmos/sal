@@ -158,7 +158,7 @@
 			<?php if(isset($records[0])){ ?>
 			<table id="listing_table"  width="100%" cellpadding="0" cellspacing="0">
 					<tr>
-					<?php if($this->Session->read('Auth.User.type')=='1') { ?>
+					<?php if($this->Session->read('Auth.User.type')=='1' || $this->Session->read('Auth.User.type')=='4' ) { ?>
 						<th>Added <br/>By</th>
 					<?php } ?>
 						<th>Billed <br/>To</th>
@@ -178,7 +178,7 @@
 					$totalDuration = 0;
 					foreach($records as $key => $value) { ?>
 					<tr class="first" id="record_<?php echo $value['Billing']['id']; ?>">
-					<?php if($this->Session->read('Auth.User.type')=='1') { ?>
+					<?php if($this->Session->read('Auth.User.type')=='1' || $this->Session->read('Auth.User.type')=='4' ) { ?>
 						<td><?php echo $value['User']['username']; ?></td>
 					<?php } ?>
 						<td><?php echo $value['Billing']['bill_to']; ?></td>

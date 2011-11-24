@@ -9,7 +9,8 @@ class UsersController extends AppController {
  * Function executes before another function
  * in the controller.
  */
-	function beforefilter() {
+	function beforeFilter() {
+	
 		$this->disableCache();
 		$this->Auth->fields = array('username'=>'username','password'=>'password');
 		$this->Auth->loginRedirect = array('controller' => 'billings', 'action' => 'index');
@@ -17,6 +18,17 @@ class UsersController extends AppController {
 		$this->Auth->userScope = array('User.is_deleted' => 0);
 		$this->Auth->allow('login');
 		Security::setHash('SHA1');//debug($this->Auth->password($this->data['User']['password']));exit;
+		parent::beforeFilter();
+	}
+	
+
+/**
+ * Function executes after controller action logic, 
+ * but before the view is rendered. 
+ */	
+	function beforeRender() {
+	
+		parent::beforeRender();
 	}
 	
 	
@@ -25,6 +37,7 @@ class UsersController extends AppController {
  * into the system using Auth component.
  */
 	function login() {
+	
 		$this->layout='login_layout';
 		if( !(empty($this->data)) && $this->Auth->user() ){	
 
@@ -36,7 +49,6 @@ class UsersController extends AppController {
 		
 		if($this->Auth->user()) 
 			$this->redirect($this->Auth->redirect());
-
 	}
 	
 	
@@ -45,15 +57,18 @@ class UsersController extends AppController {
  * It destrys all sessions and cookies automagically.
  */
 	function logout() {
+	
 		$this->Auth->logout();
 		$this->redirect('/users/login');
 	}
+
 	
 /**
  * Function shows list of all users 
  * in the system
  */
 	function lists() {
+	
 		$this->layout='default_layout';
 		$userInfo 	 = $this->Session->read('Auth.User');	
 		
@@ -72,11 +87,13 @@ class UsersController extends AppController {
 		$this->set('records',$records);
 	}
 
+	
 /**
  * Function used to add/edit users by the
  * admin authorized user.	
  */
 	function add_new() {
+	
 		$this->layout='default_layout';
 
 		if(isset($this->params['named']['id'])){ 
@@ -107,11 +124,13 @@ class UsersController extends AppController {
 		}
 	}
 	
+	
 /**
  * Function removes an billing entry(set is_deleted=1)
  * via ajax.
  */
-	function delete() { 
+	function delete() {
+	
 		$this->layout='ajax';
 		$this->User->id = $this->params['form']['id'] ;
 		$statusArr = array('success'=>0, 'message'=>'');
@@ -131,6 +150,7 @@ class UsersController extends AppController {
  * in user via requestAction.
  */
 	function my_rate() {
+	
 		$this->User->id = $this->Session->read('Auth.User.id');
 		$this->data = $this->User->read('rate, school');
 		$this->render('my_rate');
@@ -142,6 +162,7 @@ class UsersController extends AppController {
  * on ajax request
  */
 	function update_user_rate() {
+	
 		$this->layout= 'ajax';
 		$statusArr = array('success'=>0, 'message'=>'');
 		$this->User->id = $this->Session->read('Auth.User.id');
@@ -162,28 +183,56 @@ class UsersController extends AppController {
  *
  */
 	function get_user_list() {
+	
 		$this->layout= 'ajax';
 
 		$statusArr = array('success'=>0, 'message'=>'', 'content'=>'');
 		$userInfo = $this->Session->read('Auth.User');
+		$supervisorId = $this->params['form']['id'];
 		if($userInfo['type']=='1') {
 			$options = array(
-							'fields'=>'User.id, User.full_name',
-							'conditions'=>array('User.type !='=>'1', 'User.is_deleted'=>'0'),
-							'order' => 'User.full_name ASC'
-
-						);
+					'fields'=>'User.id, User.full_name',
+					'conditions'=>array('User.type !='=>'1', 'User.is_deleted'=>'0', 'User.id !='=>$supervisorId),
+					'order' => 'User.full_name ASC'
+				);
 			$this->User->recursive = -1 ;
-
 			$this->User->virtualFields = array('full_name' => 'CONCAT(User.first_name, " " , User.last_name)');
 
 			$systemUserList = $this->User->find('list',$options);
+			
 			$this->set('systemUserList',$systemUserList);
-			$this->set('supervisorInfo', $this->User->read('full_name, id', $this->params['form']['id']));
+			$this->set('supervisorInfo', $this->User->read('id, full_name, access_to_ids', $supervisorId));
+		}
+	}
+
+
+/**
+ * Functions re-assign users for supervisor.
+ * 
+ */
+	function update_user_assignment() {
+		
+		$this->layout = 'ajax';
+		$userInfo = $this->Session->read('Auth.User');
+		$statusArr = array('success'=>0, 'message'=>'', 'content'=>'');
+
+		if($userInfo['type']!='1') {
+			echo json_encode($statusArr);
+			exit;
 		}
 		
-		//echo json_encode($statusArr);
-
+		if(empty($this->data['User']['id'])) {
+			echo json_encode($statusArr);
+			exit;
+		}
 		
+		if(isset($this->data['User']['access_to_ids'])) {
+		
+			$this->data['User']['access_to_ids'] = implode(',', $this->data['User']['access_to_ids']);	
+			$statusArr['success'] = ($this->User->save($this->data, true))?1:0;
+		}
+		
+		echo json_encode($statusArr);
+		exit;
 	}
 }

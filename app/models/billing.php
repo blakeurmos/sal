@@ -15,7 +15,7 @@ class Billing extends AppModel {
 		),
 		'bill_to' => array(
 			'rule1' => array(
-				'rule' => array('inList', array('M','I','SF','NB')),
+				'rule' => array('inList', array('M','I','SF','NB','DA')),
 				'message' => 'Please enter the billed to field.',
 				//'allowEmpty' => false,
 				//'required' => true

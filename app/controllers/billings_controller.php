@@ -42,6 +42,7 @@ class BillingsController extends AppController {
  * and redirecting back to the list url.
  */
 	function searchRedirect() {
+	
 		$str = '';
 		foreach($this->data['Billing'] as $key=>$value){
 			if($key == 'bill_date') {
@@ -79,7 +80,16 @@ class BillingsController extends AppController {
 		
 		// if log'd in user is not admin user
 		if($userinfo['type']!='1') {
-			$conditions += array('Billing.user_id'=>$userinfo['id']);
+			
+			// user is supervisor then
+			if($userinfo['type']=='4' && $userinfo['access_to_ids']!='') {
+			
+				$ids = explode(',', $userinfo['access_to_ids'].', '.$userinfo['id']);
+				$conditions += array('Billing.user_id'=>$ids);
+			}else {
+				// any other user
+				$conditions += array('Billing.user_id'=>$userinfo['id']);
+			}
 		}
 		$conditions += array('Billing.is_deleted'=>0);
 
@@ -115,6 +125,7 @@ class BillingsController extends AppController {
  * authenticated user.	
  */
 	function add_new() {
+	
 		if(isset($this->params['named']['id'])){ 
 				$this->data = $this->Billing->findById($this->params['named']['id']);
 		}else{
@@ -141,6 +152,7 @@ class BillingsController extends AppController {
  * via ajax.
  */
 	function delete() { 
+	
 		$this->layout='ajax';
 		$this->Billing->id = $this->params['form']['id'] ;
 		$statusArr = array('success'=>0, 'message'=>'');
@@ -159,6 +171,7 @@ class BillingsController extends AppController {
  *
  */
 	function get_bill_detail() {
+	
 		$statusArr = array('success'=>0, 'message'=>'');
 		if(isset($this->params['form']['billId']) && ($this->params['form']['billId']!='')) {
 			$this->Billing->id = $this->params['form']['billId'] ;
@@ -182,6 +195,7 @@ class BillingsController extends AppController {
 	function get_client_list() {
 	
 		$userId = $this->Session->read('Auth.User.id');
+		
 		$options = array();
 		$options['fields'] = array('last_id', 'client_name');
 		$options['conditions'] = array('Billing.user_id'=>$userId);
@@ -189,8 +203,8 @@ class BillingsController extends AppController {
 		$options['group'] = 'Billing.client_name';
 		
 		$this->Billing->virtualFields = array('last_id' => 'MAX(Billing.id)');
+		
 		return $this->Billing->find('list', $options);
-	
 	}
 	
 }
