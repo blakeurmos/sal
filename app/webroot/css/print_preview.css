@@ -19,6 +19,11 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
+/* Blake Modifications */
+td {
+	height: 25px;
+}
+
 /* Task-3 css added */
 .print_button  {
 	float:left;
@@ -65,7 +70,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .odd {
-	background-color:#E9E9DF;
+	background-color:white;
 }
 
 .leftpad40px{

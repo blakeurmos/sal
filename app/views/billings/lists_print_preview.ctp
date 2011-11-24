@@ -30,7 +30,7 @@
 <h3>
 SERVICE ACTIVITY LOG
 </h3>
-<table id="id_table_service_log"  cellpadding="5px;">
+<table id="id_table_service_log"  cellpadding="7px;">
 	<tr>
 		<td align="left">
 			<span class="leftpad40px rightpad40px"><b>Provider:</b></span>
