@@ -33,6 +33,7 @@
 							?>	
 </span>
 <div id="id_div_service_log">
+<h2>Pastoral Counseling Service</h2>
 <h3>
 SERVICE ACTIVITY LOG
 </h3>
@@ -64,7 +65,7 @@ SERVICE ACTIVITY LOG
 	<?php if(isset($records[0])){ ?>
 	<table  id="id_table_print" cellpadding="5px;">
 			<tr>
-				<th>Billed To</th>
+				<th>Billed<br>To</th>
 				<th>Mo.</th>
 				<th>Day</th>
 				<th>Year</th>
