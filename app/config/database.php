@@ -78,7 +78,7 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => 'loogie504',
+		'password' => '',
 		'database' => 'sal',
 		'prefix' => '',
 		//'encoding' => 'utf8',
