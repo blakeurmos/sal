@@ -65,9 +65,10 @@ td {
 	font-weight:bold;
 }
 
-.even {
-	background-color:#E0E0D1;
-}
+.even_img{
+	background-image:url('../img/css_images/grey.jpg');
+	background-repeat:repeat;
+ }
 
 .odd {
 	background-color:white;

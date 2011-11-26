@@ -80,7 +80,7 @@ SERVICE ACTIVITY LOG
 			<?php 
 			$totalDuration = 0;
 			foreach($records as $key => $value) { 
-				 $class=($key%2==0)?'even':'odd';
+				 $class=($key%2==0)?'even_img':'odd';
 			?>
 			<tr class="<?php echo $class; ?>" id="record_<?php echo $value['Billing']['id']; ?>">
 				<td><?php echo $value['Billing']['bill_to']; ?></td>
