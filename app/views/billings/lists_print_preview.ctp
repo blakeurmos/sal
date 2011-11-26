@@ -1,4 +1,5 @@
-<?php echo $this->Html->css(array('print_preview'),'stylesheet',array('media'=>'all'));	  ?>
+<?php echo $this->Html->css(array('print_preview'),'stylesheet',array('media'=>'screen'));	  ?>
+<?php echo $this->Html->css(array('print_preview_p'),'stylesheet',array('media'=>'print'));	  ?>
 
 <script type="text/javascript">
 	function printDiv(divId)
@@ -25,11 +26,11 @@
 	$totalSum = ($totalTime*$rate/60)+($totalNB*20);
 ?>
 <span class="print_button">
-	<?php echo $this->Html->link(
+	<?php 	echo $this->Html->link(
 							$this->Html->image('led-ico/printer.png',array('border'=>'none')).'Print',
 							'javascript:window.print();',
-							array('escape'=>false,'title'=>'Print')); 
-							?>
+							array('escape'=>false,'title'=>'Print'));
+							?>	
 </span>
 <div id="id_div_service_log">
 <h3>
