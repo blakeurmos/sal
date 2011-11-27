@@ -219,3 +219,13 @@ label.error {
 	float:right;
 }
 
+
+/* Task-3 CSS Added */
+
+#id_p_upload_process {
+	display:none;
+}
+#id_div_main_form {
+
+}
+

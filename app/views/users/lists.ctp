@@ -42,6 +42,24 @@
 				});
 			}
 		});
+	}	
+	
+	
+	function csv_upload(id, tis) {
+	
+		var url="<?php echo $this->Html->url(array('controller'=>'users','action'=>'get_csv_upload_form')); ?>";
+		$.ajax({
+			type: 'POST',
+			url: url,
+			data: {id:id},
+			success: function(res) {
+				$.fancybox(res,{
+					'orig' : $(tis),
+					'transitionIn':'elastic',
+					'transitionOut':'elastic'
+				});
+			}
+		});
 	}
 </script>
 
@@ -65,7 +83,7 @@
 						<th>User type</th>
 						<th># of Entries</th>
 						<th>Last login</th>
-						<th colspan="2">Action</th>
+						<th colspan="4">Action</th>
 					</tr>
 					<?php foreach($records as $key => $value) { ?>
 					<tr class="first" id="record_<?php echo $value['User']['id']; ?>">
@@ -84,21 +102,32 @@
 							echo ($value['User']['last_login']==NULL)?'Never logged in':$value['User']['last_login']; 
 						?>
 						</td>
-						<td colspan=2">
+						<td colspan=4">
 							<?php 
 								if($value['User']['type']=='4') {
 									echo $this->Html->link(
 													$this->Html->image('led-ico/application_key.png',array('border'=>'none')),
 													'javascript:void(0);',
 													array(
-														'onclick'=>"assign_users(".$value['User']['id'].", this)", 'escape'=>false, 'title'=>'Assign users',
-														'class'=>'ico'
+												'onclick'=>"assign_users(".$value['User']['id'].", this)", 'escape'=>false, 'title'=>'Assign users',
+												'class'=>'ico'
 														)
-											); 
+												); 
 									echo ' | ';
 								}else {
 									echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 								}
+								
+								echo $this->Html->link(
+													$this->Html->image('led-ico/doc_convert.png',array('border'=>'none')),
+													'javascript:void(0);',
+													array(
+													'onclick'=>"csv_upload(".$value['User']['id'].", this)",
+													'escape'=>false,'title'=>'import to db','class'=>'ico'
+													)
+												); 
+
+								echo ' | ';								
 								echo $this->Html->link(
 													$this->Html->image('led-ico/pencil.png',array('border'=>'none')),
 													array('controller'=>'users','action'=>'add_new','/id:'.$value['User']['id']),

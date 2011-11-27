@@ -1,5 +1,5 @@
 <script type='text/javascript'>
-function form_validate(){
+function form_validate() {
 	var validator=$("#billing_form_id").validate({	
 	rules: {
 			'data[Billing][bill_to]':{
@@ -11,25 +11,7 @@ function form_validate(){
 			'data[Billing][client_name]':{
 				required: true
 			},
-			'data[Billing][case_no]':{
-				required: true
-			},
 			'data[Billing][appointment_time]':{
-				required: true
-			},
-			'data[Billing][type]':{
-				required: true
-			},
-			'data[Billing][cpt]':{
-				required: true
-			},
-			'data[Billing][diag]':{
-				required: true
-			},
-			'data[Billing][gr_c_so]':{
-				required: true
-			},
-			'data[Billing][sch_off_hv]':{
 				required: true
 			}
 		},
@@ -42,28 +24,10 @@ function form_validate(){
 			},	
 		'data[Billing][client_name]':{
 			required:"This field cannot be left blank"
-			},	
-		'data[Billing][case_no]':{
-			required:"This field cannot be left blank"
-			},	
+			},		
 		'data[Billing][appointment_time]':{
 			required:"This field cannot be left blank"
-			},				
-		'data[Billing][type]':{
-			required:"Please choose a value from the dropdown."
-			},
-		'data[Billing][cpt]':{
-			required:"Please choose a value from the dropdown."
-			},
-		'data[Billing][diag]':{
-			required:"This field cannot be left blank"
-			},
-		'data[Billing][gr_c_so]':{
-			required:"Please choose a value from the dropdown."
-			},
-		  'data[Billing][sch_off_hv]':{
-		  	required: "Please choose a value from the dropdown."
-		  	}
+			}
 		}
 	});
 

@@ -217,11 +217,13 @@ class UsersController extends AppController {
 		$statusArr = array('success'=>0, 'message'=>'', 'content'=>'');
 
 		if($userInfo['type']!='1') {
+		
 			echo json_encode($statusArr);
 			exit;
 		}
 		
 		if(empty($this->data['User']['id'])) {
+		
 			echo json_encode($statusArr);
 			exit;
 		}
@@ -233,6 +235,81 @@ class UsersController extends AppController {
 		}
 		
 		echo json_encode($statusArr);
+		exit;
+	}
+	
+	
+/**
+ * Function gets the upload form for csv file.
+ *
+ */
+	function get_csv_upload_form() {
+		$this->layout= 'ajax';
+
+		$statusArr = array('success'=>0, 'message'=>'', 'content'=>'');
+		$loginUserInfo = $this->Session->read('Auth.User');
+		$userId = $this->params['form']['id'];
+		
+		if($userId == '') {
+			
+			$statusArr['message'] = 'Error:';
+			echo json_encode($statusArr);
+			exit;
+		}
+		
+		if($loginUserInfo['type']!='1') {
+			
+			$statusArr['message'] = 'Error:';
+			echo json_encode($statusArr);
+			exit;
+		}	
+		
+		$this->set('userId',$userId);
+		
+	}
+	
+/**
+ * Function uploads the csv file and inserts records into db
+ *
+ */
+	function upload_csv() {
+	
+		$this->layout= 'ajax';
+		$fileInfo = $this->data['User'];
+		$status = 0;
+		$userId =  $this->data['User']['user_id'];
+
+		// check if the form has been submitted blank.
+		if(!isset($fileInfo['bill_csv'])){
+			$msg = 'Please select a file before uploading';
+			echo '<script language="javascript" type="text/javascript">window.top.window.stopUpload('.$status.',"'.$msg.'",'.$userId.');</script> ';
+			exit;
+		}
+		
+		// check whether the correct file has been uploaded
+		$fileExt = $this->findExts($fileInfo['bill_csv']['name']);
+		if($fileExt != 'csv') {
+			$msg = 'Please select a file before uploading';
+			echo '<script language="javascript" type="text/javascript">window.top.window.stopUpload('.$status.',"'.$msg.'",'.$userId.');</script> ';
+			exit;		
+		}
+		
+		$tmpName = $fileInfo['bill_csv']['tmp_name'];
+		$destFileName = 'csv_uploads/'.rand().'_'.$fileInfo['bill_csv']['name'];
+		if(!copy($tmpName,$destFileName)){
+			$msg = 'File couldnot be uploaded due to some error';
+			echo '<script language="javascript" type="text/javascript">window.top.window.stopUpload('.$status.',"'.$msg.'",'.$userId.');</script> ';
+			exit;	
+		}
+
+		$statusArr = $this->User->Billing->db_insert_from_csv($destFileName, $userId);
+		//unlink($destFileName);
+		sleep(3);
+
+		echo '<script language="javascript" type="text/javascript">
+			 window.top.window.stopUpload('.$statusArr['status'].',"'.$statusArr['msg'].'",'.$userId.');
+			 </script> ';
+
 		exit;
 	}
 }

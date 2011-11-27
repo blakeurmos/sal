@@ -127,5 +127,21 @@ var $helpers = array('Ajax','Javascript','Html','Session');
 			'pattern'    => $pattern
 		);
 	}
+
+
+	
+/**
+ * Functions extracts and returns the extension 
+ * any file.
+ */
+	function findExts($filename){ 
+		$filename = strtolower($filename) ; 
+		$exts = split("[/\\.]", $filename) ; 
+		$n = count($exts)-1; 
+		$exts = $exts[$n]; 
+		return $exts; 
+	}
+	
+	
 }
 ?>
