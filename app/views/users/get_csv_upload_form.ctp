@@ -19,17 +19,24 @@
 	}	
 </script>
 <div id="id_div_main_form">
-	<p id="id_p_upload_process">Loading...<br/>
+	<div id="id_div_assign_header">
+		<h3>Import Bills for <br>"<?php echo $userInfo['User']['full_name']; ?>"</h3>
+	</div>
+	<p id="id_p_upload_process">Importing wait...<br/>
 	<?php echo $this->Html->image('other_images/loader.gif',array('border'=>'none'));?>
 	<br/>
 	</p>
 	<div id="id_div_csv_upload_form">
 		<?php 
 			echo $this->Form->create('', array('action'=>'upload_csv','type'=>'file' ,'target'=>'upload_target', 'onsubmit'=>'startUpload();'));
-			echo $this->Form->hidden('user_id',array('value'=>$userId));
+			echo $this->Form->hidden('user_id',array('value'=>$userInfo['User']['id']));
 			echo $this->Form->file('bill_csv');
-			echo $this->Form->end('Upload');
 		?>
+		<div id="import_btn"
+		<?php
+			echo $this->Form->end('Import');
+		?>
+		</div>
 	</div>
 	<div>
 		<iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>

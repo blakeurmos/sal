@@ -5,6 +5,7 @@ class UsersController extends AppController {
 	var $components = array('Auth');
 	
 	
+	
 /**
  * Function executes before another function
  * in the controller.
@@ -21,6 +22,7 @@ class UsersController extends AppController {
 		parent::beforeFilter();
 	}
 	
+	
 
 /**
  * Function executes after controller action logic, 
@@ -30,6 +32,7 @@ class UsersController extends AppController {
 	
 		parent::beforeRender();
 	}
+	
 	
 	
 /**
@@ -52,6 +55,7 @@ class UsersController extends AppController {
 	}
 	
 	
+	
 /**
  * Functions logs the user out
  * It destrys all sessions and cookies automagically.
@@ -62,6 +66,7 @@ class UsersController extends AppController {
 		$this->redirect('/users/login');
 	}
 
+	
 	
 /**
  * Function shows list of all users 
@@ -87,6 +92,7 @@ class UsersController extends AppController {
 		$this->set('records',$records);
 	}
 
+	
 	
 /**
  * Function used to add/edit users by the
@@ -125,6 +131,7 @@ class UsersController extends AppController {
 	}
 	
 	
+	
 /**
  * Function removes an billing entry(set is_deleted=1)
  * via ajax.
@@ -145,6 +152,7 @@ class UsersController extends AppController {
 	}
 
 	
+	
 /**
  * Function pulls the rate from db for the logged
  * in user via requestAction.
@@ -155,6 +163,7 @@ class UsersController extends AppController {
 		$this->data = $this->User->read('rate, school');
 		$this->render('my_rate');
 	}
+
 	
 	
 /**
@@ -177,6 +186,8 @@ class UsersController extends AppController {
 		echo json_encode($statusArr);
 		exit;
 	}
+	
+	
 	
 /**
  * Functions get the list of all users except admin
@@ -205,6 +216,7 @@ class UsersController extends AppController {
 		}
 	}
 
+	
 
 /**
  * Functions re-assign users for supervisor.
@@ -239,13 +251,14 @@ class UsersController extends AppController {
 	}
 	
 	
+	
 /**
  * Function gets the upload form for csv file.
  *
  */
 	function get_csv_upload_form() {
+	
 		$this->layout= 'ajax';
-
 		$statusArr = array('success'=>0, 'message'=>'', 'content'=>'');
 		$loginUserInfo = $this->Session->read('Auth.User');
 		$userId = $this->params['form']['id'];
@@ -264,8 +277,9 @@ class UsersController extends AppController {
 			exit;
 		}	
 		
-		$this->set('userId',$userId);
-		
+		$this->User->recursive = -1 ;
+		$this->User->virtualFields = array('full_name' => 'CONCAT(User.first_name, " " , User.last_name)');		
+		$this->set('userInfo', $this->User->read('id, full_name', $userId));
 	}
 	
 /**
@@ -280,8 +294,8 @@ class UsersController extends AppController {
 		$userId =  $this->data['User']['user_id'];
 
 		// check if the form has been submitted blank.
-		if(!isset($fileInfo['bill_csv'])){
-			$msg = 'Please select a file before uploading';
+		if(empty($fileInfo['bill_csv']['name'])){
+			$msg = 'Please select a file to upload';
 			echo '<script language="javascript" type="text/javascript">window.top.window.stopUpload('.$status.',"'.$msg.'",'.$userId.');</script> ';
 			exit;
 		}
@@ -289,7 +303,7 @@ class UsersController extends AppController {
 		// check whether the correct file has been uploaded
 		$fileExt = $this->findExts($fileInfo['bill_csv']['name']);
 		if($fileExt != 'csv') {
-			$msg = 'Please select a file before uploading';
+			$msg = 'Please upload a CSV file to import';
 			echo '<script language="javascript" type="text/javascript">window.top.window.stopUpload('.$status.',"'.$msg.'",'.$userId.');</script> ';
 			exit;		
 		}
@@ -302,14 +316,13 @@ class UsersController extends AppController {
 			exit;	
 		}
 
+		// insert queries and commit if success
 		$statusArr = $this->User->Billing->db_insert_from_csv($destFileName, $userId);
-		//unlink($destFileName);
 		sleep(3);
 
 		echo '<script language="javascript" type="text/javascript">
 			 window.top.window.stopUpload('.$statusArr['status'].',"'.$statusArr['msg'].'",'.$userId.');
 			 </script> ';
-
 		exit;
 	}
 }

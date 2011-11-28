@@ -224,8 +224,15 @@ label.error {
 
 #id_p_upload_process {
 	display:none;
+	height:70px;
 }
 #id_div_main_form {
-
+	width:300px;
+	padding:5px;
+}
+#import_btn{
+	text-align:left;
+	margin-top:10px;
+	margin-left:55px;
 }
 
