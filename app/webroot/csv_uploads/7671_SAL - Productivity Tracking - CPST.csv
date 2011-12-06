@@ -1,0 +1,4 @@
+"Billed to","Mo.","Day","Year","Client Name","Case #","Appt.","Time","Type","CPT","Diag","Gr/C/SO","Sch/Off/HV"
+"M","Feb",14,2011,"Blake Urmos",,"10:00am",350,,,,,
+"M","Feb",14,2011,"Blake Urmos",,"10am",350,,,213.21,,
+"SF","Dec",14,2011,"Blake Urmos","012132","10am",350,"THER/M",,213.21,"Gr","Sch"
