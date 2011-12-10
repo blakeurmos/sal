@@ -237,3 +237,15 @@ label.error {
 	margin-left:45px;
 }
 
+
+/* Task-4 CSS Added */
+#listing_table a{
+	text-decoration:none;
+	color:black;
+}
+
+#listing_table a:hover{
+	text-decoration:underline;
+	color: white;
+	font-weight: bold;
+}

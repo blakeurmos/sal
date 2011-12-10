@@ -178,49 +178,51 @@
 					<?php 
 					$totalDuration = 0;
 					$totalNB = 0;
-					foreach($records as $key => $value) { ?>
-					<tr class="first" id="record_<?php echo $value['Billing']['id']; ?>">
+					foreach($records as $key => $value) { 
+						extract($value['Billing']);
+					?>
+					<tr class="first" id="record_<?php echo $id; ?>">
 					<?php if($this->Session->read('Auth.User.type')=='1' || $this->Session->read('Auth.User.type')=='4' ) { ?>
-						<td><?php echo $value['User']['username']; ?></td>
+						<td><?php echo $this->Html->link($value['User']['username'], 'lists/username:'.$value['User']['username'] , array('title'=>'username')); ?></td>
 					<?php } ?>
-						<td><?php echo $value['Billing']['bill_to']; ?></td>
-						<td><?php echo $value['Billing']['bill_date']; ?></td>
-						<td><?php echo $value['Billing']['client_name']; ?></td>
-						<td><?php echo $value['Billing']['case_no']; ?></td>
-						<td><?php echo $value['Billing']['appointment_time']; ?></td>
+						<td><?php echo $this->Html->link($bill_to, 'lists/bill_to:'.$bill_to, array('title'=>'bill_to')); ?></td>
+						<td><?php echo $this->Html->link($bill_date, 'lists/bill_date:'.$bill_date, array('title'=>'bill_date')); ?></td>
+						<td><?php echo $this->Html->link($client_name, 'lists/client_name:'.$client_name, array('title'=>'client_name')); ?></td>
+						<td><?php echo $this->Html->link($case_no, 'lists/case_no:'.$case_no, array('title'=>'case_no')); ?></td>
+						<td>
+							<?php echo $this->Html->link($appointment_time, 
+														'lists/appointment_time:'.$appointment_time,
+  														 array('title'=>'appointment_time'));
+							 ?>
+						</td>
 						<td>
 							<?php 
-							if($value['Billing']['bill_to']=='NB') {
-								$totalNB++;
-							}else {
-								$totalDuration += $value['Billing']['duration'];
-							}
-							echo $value['Billing']['duration']; 
+								if($bill_to=='NB')
+									$totalNB++;
+								else
+									$totalDuration += $duration;
+								echo $this->Html->link($duration, 'lists/duration:'.$duration, array('title'=>'duration')); 
 							?>
 						</td>
-						<td><?php echo $value['Billing']['type']; ?></td>
-						<td><?php echo $value['Billing']['cpt']; ?></td>
-						<td><?php echo $value['Billing']['diag']; ?></td>
-						<td><?php echo $value['Billing']['gr_c_so']; ?></td>
-						<td><?php echo $value['Billing']['sch_off_hv']; ?></td>
+						<td><?php echo $this->Html->link($type, 'lists/type:'.$type, array('title'=>'type')); ?></td>
+						<td><?php echo $this->Html->link($cpt, 'lists/cpt:'.$cpt, array('title'=>'cpt')); ?></td>
+						<td><?php echo $this->Html->link($diag, 'lists/bill_to:'.$diag, array('title'=>'diag')); ?></td>
+						<td><?php echo $this->Html->link($gr_c_so, 'lists/gr_c_so:'.$gr_c_so, array('title'=>'gr_c_so')); ?></td>
+						<td><?php echo $this->Html->link($sch_off_hv, 'lists/sch_off_hv:'.$sch_off_hv, array('title'=>'sch_off_hv')); ?></td>
 						<td>
 							<?php 
-								echo $this->Html->link(
-													$this->Html->image('led-ico/pencil.png',array('border'=>'none')),
-													array('controller'=>'billings','action'=>'add_new','/id:'.$value['Billing']['id']),
-													array('escape'=>false,'title'=>'edit','class'=>'ico')
-													); 
+								echo $this->Html->link($this->Html->image('led-ico/pencil.png',array('border'=>'none')),
+														array('controller'=>'billings','action'=>'add_new','/id:'.$value['Billing']['id']),
+														array('escape'=>false,'title'=>'edit','class'=>'ico')); 
 								echo ' | ';
-								echo $this->Html->link(
-											$this->Html->image('led-ico/delete.png',array('border'=>'none')),
-											'javascript:void(0);',
-											array(
-												'onclick'=>"delete_billing(".$value['Billing']['id'].")",
-												'escape'=>false,
-												'title'=>'delete',
-												'class'=>'ico'
-												)
-											); 
+								echo $this->Html->link($this->Html->image('led-ico/delete.png',array('border'=>'none')),
+														'javascript:void(0);',
+														array(
+															'onclick'=>"delete_billing(".$value['Billing']['id'].")",
+															'escape'=>false,
+															'title'=>'delete',
+															'class'=>'ico'
+															)); 
 							?>
 						</td>
 					</tr>

@@ -67,11 +67,21 @@ class BillingsController extends AppController {
  */
 	function lists() {
 
+		//pr($this->passedArgs);
 		$billDate   = isset($this->passedArgs['bill_date'])?$this->passedArgs['bill_date']:'';
 		$clientName = isset($this->passedArgs['client_name'])?$this->passedArgs['client_name']:'';
 		$billTo     = isset($this->passedArgs['bill_to'])?$this->passedArgs['bill_to']:'';
-		$type 		= isset($this->passedArgs['type'])?$this->passedArgs['type']:'';
-		$printView = isset($this->passedArgs['print_preview'])?$this->passedArgs['print_preview']:'';
+		$type 		= isset($this->passedArgs['type'])?$this->passedArgs['type']:'';	
+		
+		$caseNo 	= isset($this->passedArgs['case_no'])?$this->passedArgs['case_no']:'';	
+		$apptTime 	= isset($this->passedArgs['appointment_time'])?$this->passedArgs['appointment_time']:'';	
+		$duration 	= isset($this->passedArgs['duration'])?$this->passedArgs['duration']:'';	
+		$cpt 		= isset($this->passedArgs['cpt'])?$this->passedArgs['cpt']:'';	
+		$diag 		= isset($this->passedArgs['diag'])?$this->passedArgs['diag']:'';	
+		$gr_c_so 	= isset($this->passedArgs['gr_c_so'])?$this->passedArgs['gr_c_so']:'';	
+		$sch_off_hv = isset($this->passedArgs['sch_off_hv'])?$this->passedArgs['sch_off_hv']:'';	
+		
+		$printView  = isset($this->passedArgs['print_preview'])?$this->passedArgs['print_preview']:'';
 
 		$this->data['Billing']= $this->passedArgs;
 		
@@ -94,18 +104,38 @@ class BillingsController extends AppController {
 		$conditions += array('Billing.is_deleted'=>0);
 
 		if($billDate){
-			$conditions+=array('Billing.bill_date'=>$billDate);
+			$conditions += array('Billing.bill_date'=>$billDate);
 		}	
 		if($clientName){
-			$conditions+=array('Billing.client_name LIKE'=>'%'.$clientName.'%');
+			$conditions += array('Billing.client_name LIKE'=>'%'.$clientName.'%');
 		}		
 		if($billTo){
-			$conditions+=array('Billing.bill_to'=>$billTo);
+			$conditions += array('Billing.bill_to'=>$billTo);
 		}		
-		if($type){
-			$conditions+=array('Billing.type'=>$type);
-		}		
-
+		if($type){         
+			$conditions += array('Billing.type'=>$type);
+		}		           
+		if($caseNo){         
+			$conditions += array('Billing.case_no'=>$caseNo);
+		}                  
+		if($apptTime){         
+			$conditions += array('Billing.appointment_time'=>$apptTime);
+		}                  
+		if($duration){         
+			$conditions += array('Billing.duration'=>$duration);
+		}                  
+		if($cpt){         
+			$conditions += array('Billing.cpt'=>$cpt);
+		}                  
+		if($diag){         
+			$conditions += array('Billing.diag'=>$diag);
+		}
+		if($gr_c_so){         
+			$conditions += array('Billing.gr_c_so'=>$gr_c_so);
+		}
+		if($sch_off_hv){         
+			$conditions += array('Billing.sch_off_hv'=>$sch_off_hv);
+		}
 		$params = array(
 					'conditions'=>$conditions,
 					'order'=>'Billing.created DESC'
