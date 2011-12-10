@@ -23,7 +23,7 @@
 			$totalTime += $value['Billing']['duration'];
 		}
 	}
-	$totalSum = ($totalTime*$rate/60)+($totalNB*20);
+	$totalSum = number_format(($totalTime*$rate/60)+($totalNB*20), 2, '.', '');
 ?>
 <span class="print_button">
 	<?php 	echo $this->Html->link(
