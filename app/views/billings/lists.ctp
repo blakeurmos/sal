@@ -104,6 +104,16 @@
 	<div class="search_form">
 		<?php echo $this->Form->create('Billing',array('url'=>'searchRedirect')); ?>
 		<table border="0" width="326px" height="120px">
+		<?php if($this->Session->read('Auth.User.type')=='1') { ?>
+			<tr>
+				<td align="left" colspan="2">
+				<?php 	
+					$options = $this->requestAction('/users/get_username_list');
+					echo $this->Form->input('username', array('div'=>false, 'options'=>$options, 'empty'=>'All'));
+				?>
+				</td>						
+			</tr>
+		<?php } ?>
 			<tr>
 				<td align="left" colspan="2"><?php echo $this->Form->input('bill_date', array('div'=>false, 'empty'=>'All', 'separator'=>'/'));?></td>		
 			</tr>

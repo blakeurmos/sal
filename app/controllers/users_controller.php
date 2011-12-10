@@ -193,6 +193,34 @@ class UsersController extends AppController {
  * Functions get the list of all users except admin
  *
  */
+	function get_username_list() {
+	
+		$this->layout= 'ajax';
+
+		$loginUserInfo = $this->Session->read('Auth.User');
+
+		if($loginUserInfo['type']=='1') {
+			$options = array(
+					'fields'=>'User.username, User.username',
+					'conditions'=>array('User.is_deleted'=>'0'),
+					'order' => 'User.username ASC'
+				);
+			$this->User->recursive = -1 ;
+			//$this->User->virtualFields = array('full_name' => 'CONCAT(User.first_name, " " , User.last_name)');
+
+			$systemUsernameList = $this->User->find('list',$options);
+			return $systemUsernameList;
+			
+		}else {
+			return array();
+		}
+	}
+
+	
+/**
+ * Functions get the list of all users except admin
+ *
+ */
 	function get_user_list() {
 	
 		$this->layout= 'ajax';
@@ -214,10 +242,9 @@ class UsersController extends AppController {
 			$this->set('systemUserList',$systemUserList);
 			$this->set('supervisorInfo', $this->User->read('id, full_name, access_to_ids', $supervisorId));
 		}
-	}
+	}	
 
 	
-
 /**
  * Functions re-assign users for supervisor.
  * 

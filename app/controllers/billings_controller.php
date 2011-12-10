@@ -251,7 +251,7 @@ class BillingsController extends AppController {
 	
 		$loginUserInfo = $this->Session->read('Auth.User');
 	
-		$conditions = array();
+		$conditions = array('Billing.is_deleted'=>0);
 		//if log'd in user is not admin user
 		if($loginUserInfo['type']!='1') {
 			
