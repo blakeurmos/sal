@@ -81,6 +81,8 @@ class BillingsController extends AppController {
 		$gr_c_so 	= isset($this->passedArgs['gr_c_so'])?$this->passedArgs['gr_c_so']:'';	
 		$sch_off_hv = isset($this->passedArgs['sch_off_hv'])?$this->passedArgs['sch_off_hv']:'';	
 		
+		$username = isset($this->passedArgs['username'])?$this->passedArgs['username']:'';	
+		
 		$printView  = isset($this->passedArgs['print_preview'])?$this->passedArgs['print_preview']:'';
 
 		$this->data['Billing']= $this->passedArgs;
@@ -135,6 +137,9 @@ class BillingsController extends AppController {
 		}
 		if($sch_off_hv){         
 			$conditions += array('Billing.sch_off_hv'=>$sch_off_hv);
+		}
+		if($username){         
+			$conditions += array('User.username'=>$username);
 		}
 		$params = array(
 					'conditions'=>$conditions,
@@ -234,6 +239,38 @@ class BillingsController extends AppController {
 		
 		$this->Billing->virtualFields = array('last_id' => 'MAX(Billing.id)');
 		
+		return $this->Billing->find('list', $options);
+	}
+	
+	
+/**
+ * Function pulls all unique client names of the logd in user
+ * Its is used to generate client name drop down
+ */
+	function get_client_name() {
+	
+		$loginUserInfo = $this->Session->read('Auth.User');
+	
+		$conditions = array();
+		//if log'd in user is not admin user
+		if($loginUserInfo['type']!='1') {
+			
+			//user is supervisor then
+			if($loginUserInfo['type']=='4' && $loginUserInfo['access_to_ids']!='') {
+			
+				$ids = explode(',', $loginUserInfo['access_to_ids'].', '.$loginUserInfo['id']);
+				$conditions += array('Billing.user_id'=>$ids);
+			}else {
+				//any other user
+				$conditions += array('Billing.user_id'=>$loginUserInfo['id']);
+			}
+		}
+		$options = array();
+		$options['fields'] = array('client_name', 'client_name');
+		$options['conditions'] = $conditions;
+		$options['order'] = 'Billing.client_name ASC';
+		$options['group'] = 'Billing.client_name';
+				
 		return $this->Billing->find('list', $options);
 	}
 	

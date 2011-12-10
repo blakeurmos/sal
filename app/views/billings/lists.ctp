@@ -122,7 +122,12 @@
 				</td>					
 			</tr>
 			<tr>
-				<td align="left" colspan="2"><?php echo $this->Form->input('client_name', array('div'=>false));?></td>						
+				<td align="left" colspan="2">
+					<?php 
+						$options = $this->requestAction('/billings/get_client_name');
+						echo $this->Form->input('client_name', array('div'=>false, 'options'=>$options, 'empty'=>'All'));
+					?>
+				</td>						
 			</tr>
 			<tr>
 				<td colspan="3">
@@ -206,7 +211,7 @@
 						</td>
 						<td><?php echo $this->Html->link($type, 'lists/type:'.$type, array('title'=>'type')); ?></td>
 						<td><?php echo $this->Html->link($cpt, 'lists/cpt:'.$cpt, array('title'=>'cpt')); ?></td>
-						<td><?php echo $this->Html->link($diag, 'lists/bill_to:'.$diag, array('title'=>'diag')); ?></td>
+						<td><?php echo $this->Html->link($diag, 'lists/diag:'.$diag, array('title'=>'diag')); ?></td>
 						<td><?php echo $this->Html->link($gr_c_so, 'lists/gr_c_so:'.$gr_c_so, array('title'=>'gr_c_so')); ?></td>
 						<td><?php echo $this->Html->link($sch_off_hv, 'lists/sch_off_hv:'.$sch_off_hv, array('title'=>'sch_off_hv')); ?></td>
 						<td>
