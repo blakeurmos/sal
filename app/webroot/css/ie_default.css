@@ -247,5 +247,33 @@ label.error {
 #listing_table a:hover{
 	text-decoration:underline;
 	color: white;
-	font-weight: bold;
+}
+
+
+/* Google chart CSS TASK-5 */
+
+#parent_dashboard_div {
+	margin: 20px auto;
+    padding: 20px;
+	text-align:left;
+}
+
+#parent_filter {
+    border: 1px solid #7FDFF5;
+    height: 111px;
+    margin: 5px 30px;
+    padding: 10px;
+    text-align: left;
+    width: 380px;
+}
+
+.filter_div {
+    height: 30px;
+}
+
+#dashboard_div{
+    border: 1px solid #7FDFF5;
+    margin: 5px 30px;
+    padding: 10px;
+    text-align: left;
 }

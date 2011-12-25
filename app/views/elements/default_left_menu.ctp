@@ -3,6 +3,8 @@
 <ul class="side_menu">
 <?php 
 	echo '<li>'.$this->Html->link('Home',array('controller'=>'billings','action'=>'index'),array('title'=>'home')).'</li>'; 
+	echo '<li>'.$this->Html->link('Dashboard',array('controller'=>'users','action'=>'dashboard'),array('title'=>'dashboard')).'</li>'; 
+
 	if($this->Session->read('Auth.User.type')=='1') {
 		echo '<li>'.$this->Html->link('Manage Users',array('controller'=>'users','action'=>'lists'),array('title'=>'home')).'</li>'; 
 	} 

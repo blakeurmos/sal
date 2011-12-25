@@ -352,4 +352,79 @@ class UsersController extends AppController {
 			 </script> ';
 		exit;
 	}
+	
+	
+/**
+ * function is used to show google charts.
+ *
+ */
+	function dashboard() {
+		$this->layout='default_layout';
+		
+		$chartType    = isset($this->passedArgs['chart_type'])?$this->passedArgs['chart_type']:'bar';
+		$billFromDate = isset($this->passedArgs['bill_from_date'])?$this->passedArgs['bill_from_date']:'';
+		$billToDate   = isset($this->passedArgs['bill_to_date'])?$this->passedArgs['bill_to_date']:'';
+		
+		$dateUri = '';
+		$chartUri = '';
+		if($billFromDate && $billToDate)
+			$dateUri = "bill_from_date:$billFromDate/bill_to_date:$billToDate/";
+		if($chartType != '')
+			$chartUri .= "chart_type:$chartType/";
+
+		
+		$userinfo 	 = $this->Session->read('Auth.User');	
+		$conditions  = array();
+		
+		// if log'd in user is not admin user
+		if($userinfo['type'] != '1') {
+			
+			// user is supervisor then
+			if($userinfo['type']=='4' && $userinfo['access_to_ids']!='') {
+			
+				$ids = explode(',', $userinfo['access_to_ids'].', '.$userinfo['id']);
+				$conditions += array('Billing.user_id'=>$ids);
+			}else {
+				// any other user
+				$conditions += array('Billing.user_id'=>$userinfo['id']);
+			}
+		}
+		$conditions += array('Billing.is_deleted'=>0);
+		
+		if($billFromDate && $billToDate){
+			$conditions += array('Billing.bill_date BETWEEN ? AND ?'=>array($billFromDate, $billToDate));
+		}	
+		$params = array(
+					'recursive' => -1, //int
+					'fields' => array(
+									'Billing.client_name', 
+									'Billing.type', 
+									'Billing.duration', 
+									'Billing.case_no', 
+									'SUM(Billing.duration) as totalDuration',
+									'Billing.bill_date'), //array of field names
+					'conditions'=>$conditions,
+					'order'=>'Billing.created DESC',
+					'group'=>'Billing.case_no'
+					);
+					
+		// load Model and fits it into controller 
+		Controller::loadModel('Billing');
+		$records = $this->Billing->find('all',$params);
+		
+		// var used to draw google map
+		$chartObjStr = "['ClientName', 'Time', 'Type']";
+		$maxDuration = 0;
+		foreach($records as $key=>$val) {
+	
+			$records[$key]['Billing']['totalDuration'] = $val[0]['totalDuration'];
+			unset($records[$key][0]);
+			extract($records[$key]['Billing']);
+			$chartObjStr .= ",['".$client_name."', ".$totalDuration.", '".$type."']";
+			$maxDuration = ($totalDuration > $maxDuration)?$totalDuration:$maxDuration;
+		}
+
+		$this->set(compact('chartObjStr', 'records', 'chartType', 'dateUri', 'chartUri', 'billFromDate', 'billToDate', 'maxDuration'));
+	
+	}
 }
