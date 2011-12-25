@@ -50,7 +50,7 @@ h1, h2, h3, h4, h5, h6 {
 .content_div {
     background-color: #D9FBFF;
     float: left;
-    padding: 10px;
+    padding: 5px;
     position: relative;
 	height: expression( this.scrollHeight < 501 ? "500px" : "auto" ); /* sets min-height for IE */
     width: 760px;
@@ -254,7 +254,7 @@ label.error {
 
 #parent_dashboard_div {
 	margin: 20px auto;
-    padding: 20px;
+    padding: 14px;
 	text-align:left;
 }
 

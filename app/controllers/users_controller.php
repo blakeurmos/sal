@@ -423,6 +423,7 @@ class UsersController extends AppController {
 			$chartObjStr .= ",['".$client_name."', ".$totalDuration.", '".$type."']";
 			$maxDuration = ($totalDuration > $maxDuration)?$totalDuration:$maxDuration;
 		}
+		
 
 		$this->set(compact('chartObjStr', 'records', 'chartType', 'dateUri', 'chartUri', 'billFromDate', 'billToDate', 'maxDuration'));
 	
