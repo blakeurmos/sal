@@ -156,7 +156,7 @@ class Billing extends AppModel {
 	
 		$fieldNames = array_keys($this->getColumnTypes());
 		$handle = fopen($filename, "r");
- 		$xtraFieldNames = fgetcsv($handle);	
+ 		//$xtraFieldNames = fgetcsv($handle);	
  		$header = fgetcsv($handle);
 
 		
@@ -167,31 +167,33 @@ class Billing extends AppModel {
 		mysql_query('START TRANSACTION;');
 			
 		$lineNo = 1;
+		$insertCount = 0;
  		while (($row = fgetcsv($handle)) !== FALSE) {/* loops through each rows in the csv file and inserts it into database */
  			$lineNo++;
  			$data = array();
 			$data['user_id'] 		= $userId;
-			$data['bill_to'] 		= strtoupper($row[0]);
-			$data['bill_date'] 		= date('Y-m-d',strtotime($row[1].' '.$row[2].' '.$row[3]));
-			$data['client_name']	= $row[4];
-			$data['case_no']		= $row[5];
-			$data['appointment_time']= date('H:i:s',strtotime($row[6]));
-			$data['duration'] 		= $row[7];
-			$data['type'] 			= str_replace('/', '-', strtoupper($row[8]));
-			$data['cpt'] 			= $row[9];
-			$data['diag'] 			= $row[10];
-			$data['gr_c_so'] 		= strtoupper($row[11]);
-			$data['sch_off_hv'] 	= strtoupper($row[12]);
+			$data['bill_to'] 		= trim(strtoupper($row[0]));
+			$data['bill_date'] 		= trim(date('Y-m-d',strtotime($row[1].' '.$row[2].' '.$row[3])));
+			$data['client_name']	= trim($row[4]);
+			$data['case_no']		= trim($row[5]);
+			$data['appointment_time']= trim(date('H:i:s',strtotime($row[6])));
+			$data['duration'] 		= trim($row[7]);
+			$data['type'] 			= trim(str_replace('/', '-', strtoupper($row[8])));
+			$data['cpt'] 			= trim($row[9]);
+			$data['diag'] 			= trim($row[10]);
+			$data['gr_c_so'] 		= trim(strtoupper($row[11]));
+			$data['sch_off_hv'] 	= trim(strtoupper($row[12]));
 			$this->create();
 			if(!$this->save($data)) {
 			 	fclose($handle);
 				mysql_query('ROLLBACK;');
 				return array('status'=>0, 'msg'=>'Error: Please check line no '.$lineNo.' for error.');
 			}
+			$insertCount++;
  		}
  		fclose($handle);
 		mysql_query('COMMIT;');
-		return array('status'=>1, 'msg'=>'Success: '.($lineNo-1).' number of bills inserted'); 	
+		return array('status'=>1, 'msg'=>'Success: '.($insertCount).' number of bills inserted'); 	
 	}
 	
 }
