@@ -71,7 +71,7 @@ SERVICE ACTIVITY LOG
 				<th>Year</th>
 				<th>Client Name</th>
 				<th>Case #</th>
-				<th>Appt.</th>
+				<th>Appt. Time</th>
 				<th>Time</th>
 				<th>Type</th>
 				<th>CPT</th>
@@ -91,7 +91,7 @@ SERVICE ACTIVITY LOG
 				<td><?php echo date('Y',strtotime($value['Billing']['bill_date'])); ?></td>
 				<td><?php echo $value['Billing']['client_name']; ?></td>
 				<td><?php echo $value['Billing']['case_no']; ?></td>
-				<td><?php echo date('g:i a',strtotime($value['Billing']['appointment_time'])); ?></td>
+				<td><?php echo date('h:i a',strtotime($value['Billing']['appointment_time'])); ?></td>
 				<td><?php echo $value['Billing']['duration']; ?></td>
 				<td><?php echo $value['Billing']['type']; ?></td>
 				<td><?php echo $value['Billing']['cpt']; ?></td>

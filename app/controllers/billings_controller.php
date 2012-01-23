@@ -67,8 +67,13 @@ class BillingsController extends AppController {
  */
 	function lists() {
 
-		//pr($this->passedArgs);
-		$billDate   = isset($this->passedArgs['bill_date'])?$this->passedArgs['bill_date']:'';
+		$billDateFrom   = isset($this->passedArgs['bill_date_from'])?$this->passedArgs['bill_date_from']:'';
+		$billDateTo   = isset($this->passedArgs['bill_date_to'])?$this->passedArgs['bill_date_to']:'';
+		if(!($billDateFrom && $billDateTo)){
+			$billDateFrom 	= $this->passedArgs['bill_date_from'] = $this->firstOfMonth();
+			$billDateTo 	= $this->passedArgs['bill_date_to'] = $this->lastOfMonth();
+		}
+
 		$clientName = isset($this->passedArgs['client_name'])?$this->passedArgs['client_name']:'';
 		$billTo     = isset($this->passedArgs['bill_to'])?$this->passedArgs['bill_to']:'';
 		$type 		= isset($this->passedArgs['type'])?$this->passedArgs['type']:'';	
@@ -105,8 +110,8 @@ class BillingsController extends AppController {
 		}
 		$conditions += array('Billing.is_deleted'=>0);
 
-		if($billDate){
-			$conditions += array('Billing.bill_date'=>$billDate);
+		if($billDateFrom && $billDateTo){
+			$conditions += array('Billing.bill_date BETWEEN ? AND ?'=>array($billDateFrom, $billDateTo));
 		}	
 		if($clientName){
 			$conditions += array('Billing.client_name LIKE'=>'%'.$clientName.'%');
@@ -143,7 +148,7 @@ class BillingsController extends AppController {
 		}
 		$params = array(
 					'conditions'=>$conditions,
-					'order'=>'Billing.created DESC'
+					'order'=>'Billing.bill_date DESC, Billing.appointment_time DESC'
 					);
 		$records = $this->Billing->find('all',$params);
 		$this->set('records',$records);

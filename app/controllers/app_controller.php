@@ -143,5 +143,23 @@ var $helpers = array('Ajax','Javascript','Html','Session');
 	}
 	
 	
+/**
+ * Functions extracts and returns the extension 
+ * any file.
+ */
+	function firstOfMonth() {
+		return date("Y-m-d", strtotime(date('m').'/01/'.date('Y').' 00:00:00'));
+	}
+
+	
+/**
+ * Functions extracts and returns the extension 
+ * any file.
+ */
+	function lastOfMonth() {
+		return date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime(date('m').'/01/'.date('Y').' 00:00:00'))));
+	}
+	
+	
 }
 ?>

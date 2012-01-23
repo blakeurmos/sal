@@ -9,7 +9,9 @@ echo $this->Html->script(array(
 					'jquery',
 					'jquery.validate',
 					'fancybox/jquery.fancybox-1.3.4.pack',
-					'fancybox/jquery.mousewheel-3.0.4.pack'));
+					'fancybox/jquery.mousewheel-3.0.4.pack',
+					'datepicker/jquery.ui.core.js',
+					'datepicker/jquery.ui.datepicker.js'));
 ?>
 <?php
 

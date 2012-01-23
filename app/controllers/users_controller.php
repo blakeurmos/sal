@@ -367,8 +367,13 @@ class UsersController extends AppController {
 		
 		$dateUri = '';
 		$chartUri = '';
-		if($billFromDate && $billToDate)
+		if($billFromDate && $billToDate) {
 			$dateUri = "bill_from_date:$billFromDate/bill_to_date:$billToDate/";
+		} else {
+			$billFromDate = $this->firstOfMonth();
+			$billToDate = $this->lastOfMonth();
+			$dateUri = "bill_from_date:$billFromDate/bill_to_date:$billToDate/";
+		}
 		if($chartType != '')
 			$chartUri .= "chart_type:$chartType/";
 

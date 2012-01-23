@@ -1,5 +1,23 @@
 <script type="text/javascript">
 	$(document).ready(function() {
+	
+		/* for datepicker UI */
+		var dates = $( "#from, #to" ).datepicker({
+			dateFormat : "yy-mm-dd",
+			defaultDate: "-1w",
+			changeMonth: true,
+			numberOfMonths: 1,
+			onSelect: function( selectedDate ) {
+				var option = this.id == "from" ? "minDate" : "maxDate",
+					instance = $( this ).data( "datepicker" ),
+					date = $.datepicker.parseDate(
+						instance.settings.dateFormat ||
+						$.datepicker._defaults.dateFormat,
+						selectedDate, instance.settings );
+				dates.not( this ).datepicker( "option", option, date );
+			}
+		});
+	
 		set_rate();
 		set_total();
 	}); 
@@ -97,6 +115,8 @@
 	
 	
 </script>
+<link rel="stylesheet" href="http://jqueryui.com/themes/base/jquery.ui.all.css">
+
 <div id="id_entire_search_form">
 	<div class="search_header">
 		<h3>Search</h3>
@@ -115,7 +135,8 @@
 			</tr>
 		<?php } ?>
 			<tr>
-				<td align="left" colspan="2"><?php echo $this->Form->input('bill_date', array('div'=>false, 'empty'=>'All', 'separator'=>'/'));?></td>		
+				<td align="left"><?php echo $this->Form->input('bill_date_from', array('div'=>false, 'id'=>'from', 'readonly'=>'readonly', 'size'=>15, 'label'=>'Bill Date Range<br/><i>(From)</i>' ));?></td>		
+				<td align="left"><?php echo $this->Form->input('bill_date_to', array('div'=>false, 'id'=>'to', 'readonly'=>'readonly', 'size'=>15, 'label'=>'<br/><i>(To)</i>' ));?></td>		
 			</tr>
 			<tr>
 				<td align="left">
@@ -181,8 +202,8 @@
 						<th>Date</th>
 						<th>Client Name</th>
 						<th>Case #</th>
-						<th>Appt.</th>
-						<th>Time</th>
+						<th>Appt. Time</th>
+						<th>Duration</th>
 						<th>Type</th>
 						<th>CPT</th>
 						<th>Diag.</th>
@@ -201,11 +222,11 @@
 						<td><?php echo $this->Html->link($value['User']['username'], 'lists/username:'.$value['User']['username'] , array('title'=>'username')); ?></td>
 					<?php } ?>
 						<td><?php echo $this->Html->link($bill_to, 'lists/bill_to:'.$bill_to, array('title'=>'bill_to')); ?></td>
-						<td><?php echo $this->Html->link($bill_date, 'lists/bill_date:'.$bill_date, array('title'=>'bill_date')); ?></td>
+						<td><?php echo $this->Html->link($bill_date, 'lists/bill_date_from:'.$bill_date.'/bill_date_to:'.$bill_date, array('title'=>'bill_date')); ?></td>
 						<td><?php echo $this->Html->link($client_name, 'lists/client_name:'.$client_name, array('title'=>'client_name')); ?></td>
 						<td><?php echo $this->Html->link($case_no, 'lists/case_no:'.$case_no, array('title'=>'case_no')); ?></td>
 						<td>
-							<?php echo $this->Html->link($appointment_time, 
+							<?php echo $this->Html->link(date('h:i a',strtotime($appointment_time)), 
 														'lists/appointment_time:'.$appointment_time,
   														 array('title'=>'appointment_time'));
 							 ?>
